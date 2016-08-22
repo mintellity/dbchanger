@@ -20,6 +20,15 @@ class DbChangerController extends BaseController
 {
     public function buildDatabase(Request $request, $databaseName, $forceCreate = false)
     {
+        // check if config was published
+        if(empty(config('dbchanger'))) {
+            return response()->json([
+                'error' => 1,
+                'message' => 'Please publish the DbChanger-config file. ( php artisan vendor:publish --provider="Mintellity\DbChanger\DbChangerServiceProvider" )',
+                'result' => [],
+                'status' => '512'], 512);
+        }
+
         // validate database name
         $validator = Validator::make(["databaseName" => $databaseName], [
             'databaseName' => 'required|alpha_num|max:30|min:2'
@@ -33,8 +42,8 @@ class DbChangerController extends BaseController
         }
 
         // check if used environment is allowed to create databases
-        if(in_array(env('APP_ENV', 'local'), config('apitest.envs'))) {
-            $databaseName = config('apitest.connection.prefix') . $databaseName;
+        if(in_array(env('APP_ENV', 'local'), config('dbchanger.envs'))) {
+            $databaseName = config('dbchanger.connection.prefix') . $databaseName;
             $this->setupNewDatabase($databaseName, $forceCreate);
             $migrationOptions = Schema::hasTable('migrations') ? ['--database' => $databaseName] : ['--database' => $databaseName, '--seed' => true ];
             Artisan::call('migrate', $migrationOptions);
@@ -59,9 +68,9 @@ class DbChangerController extends BaseController
         $newConnection = 'database.connections.'.$databaseName;
         \Config::set($newConnection , config('database.connections.' . env('DB_CONNECTION', 'mysql')));
 
-        \Config::set($newConnection . ".host", config('apitest.connection.host'));
-        \Config::set($newConnection . ".user", config('apitest.connection.user'));
-        \Config::set($newConnection . ".password", config('apitest.connection.password'));
+        \Config::set($newConnection . ".host", config('dbchanger.connection.host'));
+        \Config::set($newConnection . ".user", config('dbchanger.connection.user'));
+        \Config::set($newConnection . ".password", config('dbchanger.connection.password'));
         \Config::set($newConnection . ".database", $databaseName);
 
         if($force) {
