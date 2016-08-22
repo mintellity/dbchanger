@@ -5,7 +5,7 @@ Change your database with request header. Laravel 5.
 
 Require package in your composer.json:
 ```json
-"mintellity/dbchanger" : "0.1.*"
+"mintellity/dbchanger" : "dev-master"
 ```
 
 Publish config file:
