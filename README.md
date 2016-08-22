@@ -5,7 +5,7 @@ Change your database with request header. Laravel 5.
 
 Require package in your composer.json:
 ```json
-"mintellity/dbchanger" : "0.*"
+"mintellity/dbchanger" : "0.1.*"
 ```
 
 Publish config file:
@@ -62,3 +62,4 @@ Route::get('buildDatabase/{databaseName}/{forceCreate?}', [
     ]);
 ```
 So if you run http://yourpage.app/buildDatabase/testdatabase1/true in your browser, the system will create a new database called testdatabase1 (prefix can be defined in the config file).
+If you create a new database or you force create it, your seeds will be fired automatically.
