@@ -1,0 +1,21 @@
+{
+    "name": "mintellity/dbchanger",
+    "description": "Change your database with request headers.",
+    "keywords": ["mintellity"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mintellity GmbH",
+            "email": "developer@mintellity.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Mintellity\\DbChanger": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
