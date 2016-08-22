@@ -22,7 +22,9 @@ return [
     'envs' => [
         'local'
     ],
+    // this is the header parameter's name
     'headerParameter' => 'ApiTestIdentifier',
+    // some infos about your db connection. Make sure this user is allowed to create databases.
     'connection' => [
         'host' => env('DB_HOST_TEST', 'localhost'),
         'user' => env('DB_USERNAME_TEST', 'homestead'),
