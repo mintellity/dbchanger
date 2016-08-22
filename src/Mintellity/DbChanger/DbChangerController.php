@@ -31,7 +31,7 @@ class DbChangerController extends BaseController
 
         // validate database name
         $validator = Validator::make(["databaseName" => $databaseName], [
-            'databaseName' => 'required|alpha_num|max:30|min:2'
+            'databaseName' => config('dbchanger.databaseNameValidation')
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -42,7 +42,7 @@ class DbChangerController extends BaseController
         }
 
         // check if used environment is allowed to create databases
-        if(in_array(env('APP_ENV', 'local'), config('dbchanger.envs'))) {
+        if(count(config('dbchanger.envs')) == 0 || in_array(env('APP_ENV', 'local'), config('dbchanger.envs'))) {
             $databaseName = config('dbchanger.connection.prefix') . $databaseName;
             $this->setupNewDatabase($databaseName, $forceCreate);
             $migrationOptions = Schema::hasTable('migrations') ? ['--database' => $databaseName] : ['--database' => $databaseName, '--seed' => true ];

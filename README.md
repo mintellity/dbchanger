@@ -61,5 +61,5 @@ Route::get('buildDatabase/{databaseName}/{forceCreate?}', [
         'uses' => '\Mintellity\DbChanger\DbChangerController@buildDatabase'
     ]);
 ```
-So if you run http://yourpage.app/buildDatabase/testdatabase1/true in your browser, the system will create a new database called testdatabase1 (prefix can be defined in the config file).
+So if you run http://yourpage.app/buildDatabase/testdatabase1/true in your browser, the system will create a new database called testdatabase1 (prefix can be defined in the config file). Validation for your database name is required|alpha_num|max:30|min:1.
 If you create a new database or you force create it, your seeds will be fired automatically.

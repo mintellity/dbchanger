@@ -43,7 +43,7 @@ class DbChangerMiddleware
         if (!is_null($dbchangerIdentifier))
         {
             $databaseName = config('dbchanger.connection.prefix') . $dbchangerIdentifier;
-            if(in_array(env('APP_ENV', 'local'), config('dbchanger.envs'))) {
+            if(count(config('dbchanger.envs')) == 0 || in_array(env('APP_ENV', 'local'), config('dbchanger.envs'))) {
                 $this->setupNewDatabase($databaseName);
                 $databaseExists = Schema::hasTable('migrations') ? true : false;
                 if(!$databaseExists) {
